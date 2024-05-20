@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '20.11'
           cache: 'npm'
-          cache-dependency-path: '.plugin'
+          cache-dependency-path: './plugin'
       - working-directory: './plugin'
         run: npm ci && npm run build
 
