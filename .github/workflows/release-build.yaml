@@ -20,12 +20,17 @@ jobs:
         with:
           node-version: '20.11'
           cache: 'npm'
-      - run: pushd ./plugin && npm ci && npm run build && popd
+          cache-dependency-path: '.plugin'
+      - working-directory: './plugin'
+        run: npm ci && npm run build
 
-      - name: Build project
-        run: |
-          pushd ./plugin && zip -r ../plugin.zip . -x@.distignore && popd
-          pushd ./theme && zip -r ../theme.zip . && popd
+      - name: Build plugin
+        working-directory: './plugin'
+        run:  zip -r ../plugin.zip . -x@.distignore
+
+      - name: Build Theme
+        working-directory: './theme'
+        run: zip -r ../theme.zip .
 
       - name: Get release
         id: get_release
